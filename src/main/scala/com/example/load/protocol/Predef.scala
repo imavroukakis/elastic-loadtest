@@ -1,3 +1,3 @@
 package com.example.load.protocol
 
-object Predef extends SearchDsl
+object Predef extends DataSetSearchDsl

@@ -13,6 +13,13 @@ class ElasticSearchService(client: RestHighLevelClient) extends SearchService {
     response.getTook.millis
   }
 
+  override def hadHeartAttackAndStroke(): SearchRequest = {
+    val dataQuery = DataQuery()
+    dataQuery.dataPoints += DiagnosedHeartAttack(queryType = And(), pointValue = "1")
+    dataQuery.dataPoints += DiagnosedStroke(queryType = And(), pointValue = "1")
+    toSearchRequest(dataQuery)
+  }
+
   private def toSearchRequest(dataQuery: DataQuery) = {
     val searchRequest = new SearchRequest()
     val searchSourceBuilder = new SearchSourceBuilder
@@ -35,12 +42,5 @@ class ElasticSearchService(client: RestHighLevelClient) extends SearchService {
       )
     searchSourceBuilder.query(queryBuilder)
     searchRequest.source(searchSourceBuilder)
-  }
-
-  override def hadHeartAttackAndStroke(): SearchRequest = {
-    val dataQuery = DataQuery()
-    dataQuery.dataPoints += DiagnosedHeartAttack(queryType = And(), pointValue = "1")
-    dataQuery.dataPoints += DiagnosedStroke(queryType = And(), pointValue = "1")
-    toSearchRequest(dataQuery)
   }
 }

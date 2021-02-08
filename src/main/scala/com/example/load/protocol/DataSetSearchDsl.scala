@@ -6,10 +6,11 @@ import io.gatling.core.session.Expression
 
 import scala.language.implicitConversions
 
-trait SearchDsl {
+trait DataSetSearchDsl {
   def search(): SearchProtocolBuilder = SearchProtocolBuilder()
 
-  def healthQuery(searchService: Expression[SearchService]): HealthQueryActionBuilder = HealthQueryActionBuilder(searchService)
+  def healthQuery(searchService: Expression[SearchService]): HealthQueryActionBuilder =
+    HealthQueryActionBuilder(searchService)
 
   implicit def toSearchProtocol(protocolBuilder: SearchProtocolBuilder): SearchProtocol =
     protocolBuilder.build

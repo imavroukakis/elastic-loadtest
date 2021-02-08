@@ -9,9 +9,11 @@ import io.gatling.core.structure.ScenarioContext
 import java.util.concurrent.Executors
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService}
 
-case class HealthQueryActionBuilder(searchService: Expression[SearchService]) extends ActionBuilder {
+case class HealthQueryActionBuilder(searchService: Expression[SearchService])
+  extends ActionBuilder {
 
-  private val executionContext: ExecutionContextExecutorService = ExecutionContext.fromExecutorService(Executors.newCachedThreadPool())
+  private val executionContext: ExecutionContextExecutorService =
+    ExecutionContext.fromExecutorService(Executors.newCachedThreadPool())
 
   override def build(ctx: ScenarioContext, next: Action): Action = {
     val statsEngine = ctx.coreComponents.statsEngine

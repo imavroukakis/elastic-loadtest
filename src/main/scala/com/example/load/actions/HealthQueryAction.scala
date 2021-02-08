@@ -22,8 +22,6 @@ case class HealthQueryAction(
                             ) extends ChainableAction
   with NameGen {
 
-  override def name: String = "Had heart attack and stroke"
-
   override def execute(session: Session): Unit = {
 
     val searchSvc: SearchService = searchService(session) match {
@@ -66,4 +64,6 @@ case class HealthQueryAction(
       }
     }
   }
+
+  override def name: String = "Had heart attack and stroke"
 }
