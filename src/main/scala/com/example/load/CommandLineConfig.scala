@@ -1,6 +1,6 @@
 package com.example.load
 
-import org.rogach.scallop.{ScallopConf, ScallopOption}
+import org.rogach.scallop._
 
 import scala.language.postfixOps
 
@@ -20,10 +20,10 @@ class CommandLineConfig(arguments: Seq[String]) extends ScallopConf(arguments) {
     opt[String](noshort = true, descr = "The Elastic Search index to search")
   val testDuration: ScallopOption[String] =
     opt[String](
-      default = Some("60_seconds"),
+      default = Some("60 seconds"),
       noshort = true,
       descr =
-        "the test duration in the following format: num_duration, e.g. 5_minutes. default: 60_seconds"
+        "the test duration in the following format: \"num duration\", e.g. \"5 minutes\". default: \"60 seconds\""
     )
   val username: ScallopOption[String] = opt[String](noshort = true, required = false)
   val password: ScallopOption[String] = opt[String](noshort = true, required = false)

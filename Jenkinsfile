@@ -60,7 +60,7 @@ pipeline {
                                         "--username=elastic " +
                                         '--password=$CREDENTIALS ' +
                                         "--index-name=${params.indexName} " +
-                                        "--users-per-second=$usersPerNodeCount " +
+                                        "--users-per-second=\"$usersPerNodeCount\" " +
                                         "--test-duration=${params.duration} " +
                                         "$useEsResponseTime " +
                                         "--heart-attack-and-stroke-search"

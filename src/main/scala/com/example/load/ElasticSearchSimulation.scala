@@ -21,7 +21,7 @@ class ElasticSearchSimulation extends Simulation with StrictLogging {
 
   private val duration: FiniteDuration = LoadTestRunner.config.testDuration.toOption match {
     case Some(duration) =>
-      Try(Duration(duration.replace('_', ' '))) match {
+      Try(Duration(duration)) match {
         case Success(duration) => duration.asInstanceOf[FiniteDuration]
         case Failure(exception) => throw exception
       }
@@ -36,7 +36,7 @@ class ElasticSearchSimulation extends Simulation with StrictLogging {
   private var scenarios = new ListBuffer[PopulationBuilder]()
 
   if (LoadTestRunner.config.heartAttackAndStrokeSearch()) {
-    logger.info("Testing ElasticSearch with {} users", usersPerSecond)
+    logger.info("Testing ElasticSearch with {} users for {}", usersPerSecond, duration)
     scenarios +=
       scenario("BRFSS Dataset Search")
         .feed(searchServiceFeeder)
