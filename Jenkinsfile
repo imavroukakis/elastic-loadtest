@@ -29,7 +29,9 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "sbt clean compile packArchiveTgz"
+                ansiColor('xterm') {
+                    sh "sbt clean compile packArchiveTgz"
+                }
                 stash name: 'load-test', includes: "target/${loadTestVersion}.tar.gz"
             }
         }
@@ -60,8 +62,8 @@ pipeline {
                                         "--username=elastic " +
                                         '--password=$CREDENTIALS ' +
                                         "--index-name=${params.indexName} " +
-                                        "--users-per-second=\"$usersPerNodeCount\" " +
-                                        "--test-duration=${params.duration} " +
+                                        "--users-per-second=$usersPerNodeCount " +
+                                        "--test-duration=\"${params.duration}\" " +
                                         "$useEsResponseTime " +
                                         "--heart-attack-and-stroke-search"
                                 stash name: "node $num", includes: '**/simulation.log'
