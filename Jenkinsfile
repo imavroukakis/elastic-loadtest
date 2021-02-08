@@ -9,6 +9,7 @@ def sbtTool = '1.3.8'
 def loadTestBinary = 'loadtest-1.0'
 
 pipeline {
+    agent any
     tools {
         jdk jdkTool
     }
