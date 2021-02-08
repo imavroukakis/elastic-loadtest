@@ -64,7 +64,7 @@ pipeline {
                                         "--index-name=${params.indexName} " +
                                         "--users-per-second=$usersPerNodeCount " +
                                         "--test-duration=\"${params.duration}\" " +
-                                        "$useEsResponseTime " +
+                                        "$useEsResponseTime" +
                                         "--heart-attack-and-stroke-search"
                                 stash name: "node $num", includes: '**/simulation.log'
                             }
