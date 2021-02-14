@@ -2,7 +2,6 @@ def gitUrl = 'https://github.com/imavroukakis/loadtest.git'
 
 def testGroups = [:]
 def numberOfTestNodes = 5
-def gitCredentials = 'Github'
 def splitTestsAbove = 50.0
 def jdkTool = 'openjdk-11'
 def sbtTool = '1.3.8'
