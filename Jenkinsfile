@@ -38,7 +38,7 @@ pipeline {
         stage('Load Test') {
             steps {
                 script {
-                    currentBuild.description = "Users/sec:${params.usersPerSecond}~Duration:${params.duration}"
+                    currentBuild.description = "Users/sec:${params.usersPerSecond} Duration:${params.duration} Index:${params.indexName}"
                     def userPerSecond = "${params.usersPerSecond}" as Double
                     int usersPerNodeCount
                     if (userPerSecond >= splitTestsAbove) {
