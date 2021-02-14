@@ -23,7 +23,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                buildDescription "Users/sec:${params.usersPerSecond} Duration:${params.duration} Index:${params.indexName}"
+                buildDescription "Users/sec:${params.usersPerSecond}\n Duration:${params.duration}\n Index:${params.indexName}"
                 deleteDir()
                 git branch: 'main', credentialsId: "$gitCredentials", poll: false, url: "$gitUrl"
             }
