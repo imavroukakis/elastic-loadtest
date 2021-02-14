@@ -23,6 +23,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                buildDescription "Users/sec:${params.usersPerSecond} Duration:${params.duration} Index:${params.indexName}"
                 deleteDir()
                 git branch: 'main', credentialsId: "$gitCredentials", poll: false, url: "$gitUrl"
             }
@@ -37,8 +38,7 @@ pipeline {
         }
         stage('Load Test') {
             steps {
-                script {
-                    currentBuild.description = "Users/sec:${params.usersPerSecond} Duration:${params.duration} Index:${params.indexName}"
+                script {                    
                     def userPerSecond = "${params.usersPerSecond}" as Double
                     int usersPerNodeCount
                     if (userPerSecond >= splitTestsAbove) {
