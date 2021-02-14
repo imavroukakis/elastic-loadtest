@@ -24,7 +24,7 @@ pipeline {
             steps {
                 buildDescription "Users/sec:${params.usersPerSecond}\n Duration:${params.duration}\n Index:${params.indexName}"
                 deleteDir()
-                git branch: 'main', credentialsId: "$gitCredentials", poll: false, url: "$gitUrl"
+                git branch: 'main', poll: false, url: "$gitUrl"
             }
         }
         stage('Build') {
