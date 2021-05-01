@@ -17,7 +17,7 @@ libraryDependencies ++= Seq(
   "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion exclude("io.gatling", "gatling-recorder"),
   "org.rogach" %% "scallop" % "4.0.2",
   "org.apache.logging.log4j" % "log4j-core" % "2.14.0",
-  "org.elasticsearch.client" % "elasticsearch-rest-high-level-client" % "7.10.2"
+  "org.elasticsearch.client" % "elasticsearch-rest-high-level-client" % "6.8.15"
 )
 
 packMain := Map("loadtest" -> "com.example.load.LoadTestRunner")
