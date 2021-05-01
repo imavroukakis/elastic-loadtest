@@ -1,4 +1,4 @@
-def gitUrl = 'https://github.com/imavroukakis/loadtest.git'
+def gitUrl = 'https://github.com/imavroukakis/elastic-loadtest'
 
 def testGroups = [:]
 def numberOfTestNodes = 5
