@@ -15,10 +15,6 @@ import scala.util.{Failure, Success, Try}
 
 class ElasticSearchSimulation extends Simulation with StrictLogging {
 
-  private def searchServiceFeeder: Feeder[SearchService] = {
-    SearchServiceFeeder.buildSearchServiceFeeder(LoadTestRunner.config)
-  }
-
   private val duration: FiniteDuration = LoadTestRunner.config.testDuration.toOption match {
     case Some(duration) =>
       Try(Duration(duration)) match {
@@ -30,10 +26,12 @@ class ElasticSearchSimulation extends Simulation with StrictLogging {
       60 seconds
     }
   }
-
   private val usersPerSecond: Double = LoadTestRunner.config.usersPerSecond().toDouble
-
   private var scenarios = new ListBuffer[PopulationBuilder]()
+
+  private def searchServiceFeeder: Feeder[SearchService] = {
+    SearchServiceFeeder.buildSearchServiceFeeder(LoadTestRunner.config)
+  }
 
   if (LoadTestRunner.config.heartAttackAndStrokeSearch()) {
     logger.info("Testing ElasticSearch with {} users for {}", usersPerSecond, duration)
