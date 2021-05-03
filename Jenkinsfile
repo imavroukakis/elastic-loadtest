@@ -2,7 +2,7 @@ def gitUrl = 'https://github.com/imavroukakis/elastic-loadtest'
 
 def testGroups = [:]
 def numberOfTestNodes = 2
-def splitTestsAbove = 50.0
+def splitTestsAbove = 30.0
 def jdkTool = 'openjdk-11'
 def sbtTool = '1.3.8'
 def loadTestBinary = 'loadtest'
