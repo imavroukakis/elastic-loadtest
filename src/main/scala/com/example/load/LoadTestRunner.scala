@@ -21,7 +21,7 @@ object LoadTestRunner {
     } else {
       val simClass = classOf[ElasticSearchSimulation].getName
       propertiesBuilder.simulationClass(simClass)
-      val now = Calendar.getInstance().getTime
+      val now        = Calendar.getInstance().getTime
       val dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm_ss")
       propertiesBuilder.resultsDirectory(s"results/${dateFormat.format(now)}")
     }

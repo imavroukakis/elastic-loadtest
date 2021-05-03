@@ -21,7 +21,7 @@ class ElasticSearchService(client: RestHighLevelClient) extends SearchService {
   }
 
   private def toSearchRequest(dataQuery: DataQuery) = {
-    val searchRequest = new SearchRequest()
+    val searchRequest       = new SearchRequest()
     val searchSourceBuilder = new SearchSourceBuilder
     searchSourceBuilder.from(0)
     searchSourceBuilder.size(dataQuery.size)

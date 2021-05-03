@@ -10,14 +10,14 @@ import java.util.concurrent.Executors
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService}
 
 case class HealthQueryActionBuilder(searchService: Expression[SearchService])
-  extends ActionBuilder {
+    extends ActionBuilder {
 
   private val executionContext: ExecutionContextExecutorService =
     ExecutionContext.fromExecutorService(Executors.newCachedThreadPool())
 
   override def build(ctx: ScenarioContext, next: Action): Action = {
     val statsEngine = ctx.coreComponents.statsEngine
-    val clock = ctx.coreComponents.clock
+    val clock       = ctx.coreComponents.clock
 
     HealthQueryAction(searchService, statsEngine, clock, executionContext, next)
   }

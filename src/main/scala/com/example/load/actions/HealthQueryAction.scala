@@ -14,25 +14,25 @@ import org.elasticsearch.action.search.SearchRequest
 import scala.concurrent.{ExecutionContextExecutorService, Future}
 
 case class HealthQueryAction(
-                              searchService: Expression[SearchService],
-                              statsEngine: StatsEngine,
-                              clock: Clock,
-                              implicit val executionContext: ExecutionContextExecutorService,
-                              next: Action
-                            ) extends ChainableAction
-  with NameGen {
+  searchService: Expression[SearchService],
+  statsEngine: StatsEngine,
+  clock: Clock,
+  implicit val executionContext: ExecutionContextExecutorService,
+  next: Action
+) extends ChainableAction
+    with NameGen {
 
   override def execute(session: Session): Unit = {
 
     val searchSvc: SearchService = searchService(session) match {
       case Success(searchService: SearchService) => searchService
-      case Failure(error) => throw new IllegalArgumentException(error)
+      case Failure(error)                        => throw new IllegalArgumentException(error)
     }
     val searchRequest: SearchRequest = searchSvc.hadHeartAttackAndStroke()
-    val start: Long = clock.nowMillis
+    val start: Long                  = clock.nowMillis
     val f = Future {
       val esResponseTime: Long = searchSvc.query(searchRequest, LoadTestRunner.config.indexName())
-      val clockEnd: Long = clock.nowMillis
+      val clockEnd: Long       = clock.nowMillis
       val end: Long =
         if (LoadTestRunner.config.useEsResponseTime()) start + esResponseTime else clockEnd
       statsEngine.logResponse(

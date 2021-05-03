@@ -18,7 +18,7 @@ class ElasticSearchSimulation extends Simulation with StrictLogging {
   private val duration: FiniteDuration = LoadTestRunner.config.testDuration.toOption match {
     case Some(duration) =>
       Try(Duration(duration)) match {
-        case Success(duration) => duration.asInstanceOf[FiniteDuration]
+        case Success(duration)  => duration.asInstanceOf[FiniteDuration]
         case Failure(exception) => throw exception
       }
     case None => {
@@ -27,7 +27,7 @@ class ElasticSearchSimulation extends Simulation with StrictLogging {
     }
   }
   private val usersPerSecond: Double = LoadTestRunner.config.usersPerSecond().toDouble
-  private var scenarios = new ListBuffer[PopulationBuilder]()
+  private var scenarios              = new ListBuffer[PopulationBuilder]()
 
   private def searchServiceFeeder: Feeder[SearchService] = {
     SearchServiceFeeder.buildSearchServiceFeeder(LoadTestRunner.config)

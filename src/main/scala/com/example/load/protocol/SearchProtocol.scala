@@ -18,8 +18,8 @@ object SearchProtocol {
         throw new IllegalStateException("Can't provide a default value for SearchProtocol")
 
       override def newComponents(
-                                  coreComponents: CoreComponents
-                                ): (SearchProtocol) => SearchComponents = { protocol =>
+        coreComponents: CoreComponents
+      ): (SearchProtocol) => SearchComponents = { protocol =>
         SearchComponents(protocol)
       }
 
