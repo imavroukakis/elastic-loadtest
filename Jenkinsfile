@@ -32,6 +32,7 @@ pipeline {
                 ansiColor('xterm') {
                     sh "sbt clean compile packArchiveTgz"
                 }
+                // Stash the packed binary for downstream use in the nodes
                 stash name: 'load-test', includes: "target/${loadTestVersion}.tar.gz"
             }
         }
@@ -39,7 +40,9 @@ pipeline {
             steps {
                 script {                    
                     def userPerSecond = "${params.usersPerSecond}" as Double
-                    int usersPerNodeCount
+                    long usersPerNodeCount
+                    // If the test requires more users per second than our high watermark for a single node
+                    // split the users according to the number of test nodes we want to use
                     if (userPerSecond >= splitTestsAbove) {
                         usersPerNodeCount = Math.round(userPerSecond / numberOfTestNodes)
                     } else {
@@ -48,6 +51,7 @@ pipeline {
                     }
                     for (int i = 0; i < numberOfTestNodes; i++) {
                         def num = i
+                        // bind our test setup to each node
                         testGroups["node $num"] = {
                             node {
                                 def javaHome = tool name: jdkTool
@@ -65,10 +69,12 @@ pipeline {
                                         "--test-duration=\"${params.duration}\" " +
                                         "$useEsResponseTime" +
                                         "--heart-attack-and-stroke-search"
+                                // stash the simulation results for processing at the end of the test run
                                 stash name: "node $num", includes: '**/simulation.log'
                             }
                         }
                     }
+                    // execute the tests in parallel
                     parallel testGroups
                 }
             }
@@ -76,16 +82,14 @@ pipeline {
         stage('Collect results') {
             steps {
                 script {
-                    if (testGroups.containsKey("default")) {
-                        unstash 'default'
-
-                    } else {
-                        for (int i = 0; i < numberOfTestNodes; i++) {
-                            def num = i
-                            unstash "node $i"
-                        }
+                    // unstash the results from each testing node
+                    // they will be in a different directory per node
+                    for (int i = 0; i < numberOfTestNodes; i++) {
+                        def num = i
+                        unstash "node $i"
                     }
                 }
+                // run our Load test in reporting mode against the collected node results
                 sh "mv target/${loadTestVersion}.tar.gz ./ && tar xvf ${loadTestVersion}.tar.gz"
                 sh "${loadTestVersion}/bin/${loadTestBinary} --report-only \"${env.WORKSPACE}/results\""
                 sh "mv results results-test-${env.BUILD_NUMBER}"
