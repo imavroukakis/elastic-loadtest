@@ -28,8 +28,8 @@ object SearchServiceFeeder {
               )
               builder.setHttpClientConfigCallback(new HttpClientConfigCallback() {
                 override def customizeHttpClient(
-                                                  httpClientBuilder: HttpAsyncClientBuilder
-                                                ): HttpAsyncClientBuilder = {
+                  httpClientBuilder: HttpAsyncClientBuilder
+                ): HttpAsyncClientBuilder = {
                   httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider)
                 }
               })
