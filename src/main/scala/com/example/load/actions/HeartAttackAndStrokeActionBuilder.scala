@@ -9,7 +9,7 @@ import io.gatling.core.structure.ScenarioContext
 import java.util.concurrent.Executors
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService}
 
-case class HealthQueryActionBuilder(searchService: Expression[SearchService])
+case class HeartAttackAndStrokeActionBuilder(searchService: Expression[SearchService])
     extends ActionBuilder {
 
   private val executionContext: ExecutionContextExecutorService =
@@ -19,7 +19,7 @@ case class HealthQueryActionBuilder(searchService: Expression[SearchService])
     val statsEngine = ctx.coreComponents.statsEngine
     val clock       = ctx.coreComponents.clock
 
-    HealthQueryAction(searchService, statsEngine, clock, executionContext, next)
+    HeartAttackAndStrokeQueryAction(searchService, statsEngine, clock, executionContext, next)
   }
 
 }

@@ -13,7 +13,7 @@ import org.elasticsearch.action.search.SearchRequest
 
 import scala.concurrent.{ExecutionContextExecutorService, Future}
 
-case class HealthQueryAction(
+case class HeartAttackAndStrokeQueryAction(
   searchService: Expression[SearchService],
   statsEngine: StatsEngine,
   clock: Clock,

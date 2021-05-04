@@ -27,7 +27,7 @@ class ElasticSearchSimulation extends Simulation with StrictLogging {
     }
   }
   private val usersPerSecond: Double = LoadTestRunner.config.usersPerSecond().toDouble
-  private var scenarios              = new ListBuffer[PopulationBuilder]()
+  private val scenarios              = new ListBuffer[PopulationBuilder]()
 
   private def searchServiceFeeder: Feeder[SearchService] = {
     SearchServiceFeeder.buildSearchServiceFeeder(LoadTestRunner.config)
@@ -38,7 +38,7 @@ class ElasticSearchSimulation extends Simulation with StrictLogging {
     scenarios +=
       scenario("BRFSS Dataset Search")
         .feed(searchServiceFeeder)
-        .exec(healthQuery("${host}"))
+        .exec(hadHeartAttackAndStroke("${host}"))
         .inject(
           rampUsersPerSec(1) to usersPerSecond during (1 minute),
           constantUsersPerSec(usersPerSecond) during duration
